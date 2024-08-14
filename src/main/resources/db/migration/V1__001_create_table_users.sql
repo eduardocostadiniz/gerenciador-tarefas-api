@@ -1,8 +1,9 @@
 CREATE TABLE IF NOT EXISTS "users" (
-    email VARCHAR(75) NOT NULL,
+	id VARCHAR(100) NOT NULL,
+    email VARCHAR(75) UNIQUE NOT NULL,
     name VARCHAR(75) NOT NULL,
     profile VARCHAR(50) NOT NULL,
     avatar VARCHAR(1000),
     created_at TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (email)
+    PRIMARY KEY (ID)
 );
