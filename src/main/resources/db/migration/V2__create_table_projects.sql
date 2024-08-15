@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS "projects" (
+	id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(75) NOT NULL,
+    description VARCHAR(500) NOT NULL
+);
