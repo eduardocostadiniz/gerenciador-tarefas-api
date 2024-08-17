@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,28 +20,34 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
-	
-	public User(String userId) {
-		this.id = userId;
-	}
+@Table(name = "tasks")
+public class Task {
 
-	public User(UserRequestDTO user) {
-		this.email = user.email();
-		this.name = user.name();
-		this.profile = user.profile();
-		this.avatar = user.avatar();
+	public Task(TaskRequestDTO task) {
+		this.name = task.name();
+		this.description = task.description();
+		this.status = task.status();
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private String id;
-	private String email;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String name;
-	private String profile;
-	private String avatar;
+	private String description;
+	private String status;
+
+	@OneToOne
+	@JoinColumn(name = "owner_id")
+	private User user;
+
+	@OneToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
+
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
+
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 
 }

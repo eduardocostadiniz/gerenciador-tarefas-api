@@ -17,6 +17,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "projects")
 public class Project {
+	
+	public Project(Long projectId) {
+		this.id = projectId;
+	}
 
 	public Project(ProjectRequestDTO projectDto) {
 		this.name = projectDto.name();
