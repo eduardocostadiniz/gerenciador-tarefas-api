@@ -50,4 +50,10 @@ public class Task {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status + ", user="
+				+ user + ", project=" + project + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}
+
 }

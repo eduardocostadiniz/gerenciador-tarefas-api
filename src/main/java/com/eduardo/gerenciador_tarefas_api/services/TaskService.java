@@ -45,4 +45,35 @@ public class TaskService {
 		return taskRepository.save(task);
 	}
 
+	public void update(Long taskId, TaskRequestDTO taskDto) throws Exception {
+		Task task = taskRepository.findById(taskId).orElseThrow(() -> new Exception("Tarefa inexistente"));
+
+		if (taskDto.ownerId() == null) {
+			task.setUser(null);
+		} else {
+			User changedUser = userRepository.findById(taskDto.ownerId())
+					.orElseThrow(() -> new Exception("Usuário alterado inexistente"));
+			task.setUser(changedUser);
+		}
+
+		if (taskDto.projectId() != null && taskDto.projectId() != task.getProject().getId()) {
+			Project changedProject = projectRepository.findById(taskDto.projectId())
+					.orElseThrow(() -> new Exception("Projeto alterado inexistente"));
+			task.setProject(changedProject);
+		}
+
+		task.setName(taskDto.name());
+		task.setDescription(taskDto.description());
+		task.setStatus(taskDto.status());
+		task.setUpdatedAt(LocalDateTime.now());
+
+		taskRepository.save(task);
+	}
+
+	public void delete(Long taskId) throws Exception {
+		Task task = taskRepository.findById(taskId).orElseThrow(() -> new Exception("Tarefa inexistente"));
+
+		taskRepository.delete(task);
+	}
+
 }

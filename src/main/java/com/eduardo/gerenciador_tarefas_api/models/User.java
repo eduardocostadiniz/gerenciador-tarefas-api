@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User {
-	
+
 	public User(String userId) {
 		this.id = userId;
 	}
@@ -41,5 +41,11 @@ public class User {
 	private String avatar;
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", profile=" + profile + ", avatar=" + avatar
+				+ ", createdAt=" + createdAt + "]";
+	}
 
 }
