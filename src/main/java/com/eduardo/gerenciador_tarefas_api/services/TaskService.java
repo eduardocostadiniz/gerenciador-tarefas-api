@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eduardo.gerenciador_tarefas_api.exceptions.ProjectNotFoundException;
+import com.eduardo.gerenciador_tarefas_api.exceptions.TaskNotFoundException;
+import com.eduardo.gerenciador_tarefas_api.exceptions.UserNotFoundException;
 import com.eduardo.gerenciador_tarefas_api.models.Project;
 import com.eduardo.gerenciador_tarefas_api.models.Task;
 import com.eduardo.gerenciador_tarefas_api.models.TaskRequestDTO;
@@ -30,11 +33,11 @@ public class TaskService {
 		return taskRepository.findAll();
 	}
 
-	public Task create(TaskRequestDTO taskDto) throws Exception {
+	public Task create(TaskRequestDTO taskDto) {
 		Task task = new Task(taskDto);
-		User user = userRepository.findById(taskDto.ownerId()).orElseThrow(() -> new Exception("Usuário inexistente"));
+		User user = userRepository.findById(taskDto.ownerId()).orElseThrow(() -> new UserNotFoundException());
 		Project project = projectRepository.findById(taskDto.projectId())
-				.orElseThrow(() -> new Exception("Projeto inexistente"));
+				.orElseThrow(() -> new ProjectNotFoundException());
 		LocalDateTime now = LocalDateTime.now();
 
 		task.setUser(user);
@@ -45,20 +48,20 @@ public class TaskService {
 		return taskRepository.save(task);
 	}
 
-	public void update(Long taskId, TaskRequestDTO taskDto) throws Exception {
-		Task task = taskRepository.findById(taskId).orElseThrow(() -> new Exception("Tarefa inexistente"));
+	public void update(Long taskId, TaskRequestDTO taskDto) {
+		Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException());
 
 		if (taskDto.ownerId() == null) {
 			task.setUser(null);
 		} else {
 			User changedUser = userRepository.findById(taskDto.ownerId())
-					.orElseThrow(() -> new Exception("Usuário alterado inexistente"));
+					.orElseThrow(() -> new UserNotFoundException());
 			task.setUser(changedUser);
 		}
 
 		if (taskDto.projectId() != null && taskDto.projectId() != task.getProject().getId()) {
 			Project changedProject = projectRepository.findById(taskDto.projectId())
-					.orElseThrow(() -> new Exception("Projeto alterado inexistente"));
+					.orElseThrow(() -> new ProjectNotFoundException());
 			task.setProject(changedProject);
 		}
 
@@ -70,8 +73,8 @@ public class TaskService {
 		taskRepository.save(task);
 	}
 
-	public void delete(Long taskId) throws Exception {
-		Task task = taskRepository.findById(taskId).orElseThrow(() -> new Exception("Tarefa inexistente"));
+	public void delete(Long taskId) {
+		Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException());
 
 		taskRepository.delete(task);
 	}

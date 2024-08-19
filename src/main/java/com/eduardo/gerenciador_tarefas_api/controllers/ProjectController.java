@@ -32,34 +32,21 @@ public class ProjectController {
 
 	@PostMapping
 	public ResponseEntity<Project> create(@RequestBody ProjectRequestDTO projectDto) {
-		try {
-			Project project = projectService.create(projectDto);
-			return ResponseEntity.status(HttpStatus.CREATED).body(project);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		Project project = projectService.create(projectDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(project);
 	}
 
 	@PutMapping("/{projectId}")
 	public ResponseEntity<Project> update(@PathVariable("projectId") Long projectId,
 			@RequestBody ProjectRequestDTO projectDto) {
-		try {
-			projectService.update(projectId, projectDto);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		projectService.update(projectId, projectDto);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 	@DeleteMapping("/{projectId}")
 	public ResponseEntity<Project> delete(@PathVariable("projectId") Long projectId) {
-		try {
-			projectService.delete(projectId);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		projectService.delete(projectId);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }
