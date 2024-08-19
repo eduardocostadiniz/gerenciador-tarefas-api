@@ -32,35 +32,20 @@ public class TaskController {
 
 	@PostMapping
 	public ResponseEntity<Task> create(@RequestBody TaskRequestDTO taskDto) {
-		try {
-			Task taskCreated = taskService.create(taskDto);
-			return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		Task taskCreated = taskService.create(taskDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
 	}
 
 	@PutMapping("/{taskId}")
 	public ResponseEntity<Task> update(@PathVariable("taskId") Long taskId, @RequestBody TaskRequestDTO taskDto) {
-		try {
-			taskService.update(taskId, taskDto);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		taskService.update(taskId, taskDto);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 	@DeleteMapping("/{taskId}")
 	public ResponseEntity<Task> delete(@PathVariable("taskId") Long taskId) {
-		try {
-			taskService.delete(taskId);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		taskService.delete(taskId);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }

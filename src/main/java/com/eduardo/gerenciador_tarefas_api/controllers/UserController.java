@@ -32,33 +32,20 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<User> create(@RequestBody UserRequestDTO userRequest) {
-		try {
-			User createdUser = userService.create(userRequest);
-			return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		User createdUser = userService.create(userRequest);
+		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 	}
 
 	@PutMapping("/{userId}")
 	public ResponseEntity<User> update(@PathVariable("userId") String userId, @RequestBody UserRequestDTO userRequest) {
-		try {
-			userService.update(userId, userRequest);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
+		userService.update(userId, userRequest);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<User> delete(@PathVariable("userId") String userId) {
-		try {
-			userService.delete(userId);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		userService.delete(userId);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }
