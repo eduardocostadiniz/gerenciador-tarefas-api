@@ -39,3 +39,8 @@ GERENCIADOR_TAREFAS_API_DB_USER=db-user
 GERENCIADOR_TAREFAS_API_DB_PWD=db-password
 GERENCIADOR_TAREFAS_JPA_SHOW_SQL=true
 ```
+
+###### Documentação dos Endpoints
+
+A documentação dos endpoints podem ser encontradas no caminho `/swagger-ui/index.html`.  
+Caso esteja rodando o projeto local, pode acessar a [DOCUMENTAÇÃO LOCAL](http://localhost:8080/swagger-ui/index.html)
