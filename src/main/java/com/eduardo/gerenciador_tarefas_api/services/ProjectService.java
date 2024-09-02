@@ -1,8 +1,8 @@
 package com.eduardo.gerenciador_tarefas_api.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.eduardo.gerenciador_tarefas_api.exceptions.ProjectAlreadyExistsException;
@@ -17,8 +17,8 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 
-	public List<Project> getAll() {
-		return projectRepository.findAll();
+	public Page<Project> getAll(Pageable page) {
+		return projectRepository.findAll(page);
 	}
 
 	public Project create(ProjectRequestDTO projectDto) {

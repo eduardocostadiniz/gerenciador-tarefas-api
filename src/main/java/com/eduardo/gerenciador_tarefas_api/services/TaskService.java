@@ -1,9 +1,10 @@
 package com.eduardo.gerenciador_tarefas_api.services;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.eduardo.gerenciador_tarefas_api.exceptions.ProjectNotFoundException;
@@ -29,8 +30,8 @@ public class TaskService {
 	@Autowired
 	private ProjectRepository projectRepository;
 
-	public List<Task> getAll() {
-		return taskRepository.findAll();
+	public Page<Task> getAll(Pageable page) {
+		return taskRepository.findAll(page);
 	}
 
 	public Task create(TaskRequestDTO taskDto) {

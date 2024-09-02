@@ -3,6 +3,7 @@ package com.eduardo.gerenciador_tarefas_api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +27,9 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping
-	public List<User> getAll() {
-		return userService.getAll();
+	public ResponseEntity<List<User>> getAll(Pageable page) {
+		List<User> users = userService.getAll(page).getContent();
+		return ResponseEntity.status(HttpStatus.OK).body(users);
 	}
 
 	@PostMapping
