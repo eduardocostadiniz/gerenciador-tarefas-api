@@ -30,4 +30,7 @@ replay_pid*
 .project
 .settings
 
+.idea
+
 bin/
+build/
