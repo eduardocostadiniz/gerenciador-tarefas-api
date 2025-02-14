@@ -6,6 +6,6 @@ import com.eduardo.gerenciador_tarefas_api.models.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 	
-	public User findByEmail(String email);
+	User findByEmail(String email);
 
 }

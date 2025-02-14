@@ -1,5 +1,18 @@
 package com.eduardo.gerenciador_tarefas_api.services;
 
+import com.eduardo.gerenciador_tarefas_api.exceptions.ProjectNotFoundException;
+import com.eduardo.gerenciador_tarefas_api.exceptions.TaskNotFoundException;
+import com.eduardo.gerenciador_tarefas_api.exceptions.UserNotFoundException;
+import com.eduardo.gerenciador_tarefas_api.models.*;
+import com.eduardo.gerenciador_tarefas_api.repositories.ProjectRepository;
+import com.eduardo.gerenciador_tarefas_api.repositories.TaskRepository;
+import com.eduardo.gerenciador_tarefas_api.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,21 +20,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.eduardo.gerenciador_tarefas_api.models.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.eduardo.gerenciador_tarefas_api.exceptions.ProjectNotFoundException;
-import com.eduardo.gerenciador_tarefas_api.exceptions.TaskNotFoundException;
-import com.eduardo.gerenciador_tarefas_api.exceptions.UserNotFoundException;
-import com.eduardo.gerenciador_tarefas_api.repositories.ProjectRepository;
-import com.eduardo.gerenciador_tarefas_api.repositories.TaskRepository;
-import com.eduardo.gerenciador_tarefas_api.repositories.UserRepository;
 
 @Service
 public class TaskService {
@@ -37,6 +35,11 @@ public class TaskService {
 
     public Page<Task> getAll(Pageable page) {
         return taskRepository.findAll(page);
+    }
+
+    public List<Task> getPendingTask(String email) {
+        User user = this.userRepository.findByEmail(email);
+        return this.taskRepository.findByUserId(user.getId());
     }
 
     public Task create(TaskRequestDTO taskDto) {

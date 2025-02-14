@@ -6,6 +6,6 @@ import com.eduardo.gerenciador_tarefas_api.models.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-	public Project findByName(String name);
+	Project findByName(String name);
 
 }
