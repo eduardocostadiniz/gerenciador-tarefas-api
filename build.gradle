@@ -29,6 +29,8 @@ dependencies {
   implementation 'org.flywaydb:flyway-core'
   implementation 'org.flywaydb:flyway-database-postgresql'
   implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+  implementation 'org.ff4j:ff4j-spring-boot-starter:1.9'
+  implementation 'org.ff4j:ff4j-web:2.1'
   compileOnly 'org.jboss.logging:jboss-logging'
   compileOnly 'org.projectlombok:lombok'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
