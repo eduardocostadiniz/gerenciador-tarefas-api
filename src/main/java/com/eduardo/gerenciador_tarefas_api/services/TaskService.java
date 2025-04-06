@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class TaskService {
 
   @Autowired private ProjectRepository projectRepository;
 
+  @Cacheable("taskService.getAll")
   public List<Task> getAll() {
     return taskRepository.findAll();
   }

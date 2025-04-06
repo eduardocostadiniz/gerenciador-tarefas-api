@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class FF4JConfig {
 
   private static final String FF4J_FEATURE_CONTROLLER = "is-feature-controller-active";
+  private static final String FF4J_SCHEDULING_ENABLED = "is-scheduling_enabled";
 
   @Bean
   public FF4j ff4J() {
@@ -21,8 +22,11 @@ public class FF4JConfig {
     ff4j.setEventRepository(new InMemoryEventRepository());
     ff4j.audit(true);
 
+    // TODO: mover para controller quando tirar o InMemoryStore
     ff4j.createFeature(FF4J_FEATURE_CONTROLLER);
     ff4j.enable(FF4J_FEATURE_CONTROLLER);
+    ff4j.createFeature(FF4J_SCHEDULING_ENABLED);
+    ff4j.disable(FF4J_SCHEDULING_ENABLED);
 
     return ff4j;
   }

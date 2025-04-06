@@ -62,6 +62,8 @@ public class FF4jWebConsoleConfig extends SpringBootServletInitializer {
                     .permitAll()
                     .requestMatchers("/features/**")
                     .permitAll()
+                    .requestMatchers("/cache/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .formLogin(form -> form.usernameParameter(ff4jUsername).passwordParameter(ff4jPassword))
