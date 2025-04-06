@@ -18,43 +18,42 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+  @Autowired private TaskService taskService;
 
-    @GetMapping
-    public ResponseEntity<List<Task>> getAll(Pageable page) {
-        List<Task> tasks = taskService.getAll(page).getContent();
-        return ResponseEntity.status(HttpStatus.OK).body(tasks);
-    }
+  @GetMapping
+  public ResponseEntity<List<Task>> getAll(Pageable page) {
+    List<Task> tasks = taskService.getAllWithPagination(page).getContent();
+    return ResponseEntity.status(HttpStatus.OK).body(tasks);
+  }
 
-    @GetMapping("/pendings")
-    public ResponseEntity<List<Task>> getPendingTasks(@RequestParam String email) {
-        return ResponseEntity.ok().body(this.taskService.getPendingTask(email));
-    }
+  @GetMapping("/pendings")
+  public ResponseEntity<List<Task>> getPendingTasks(@RequestParam String email) {
+    return ResponseEntity.ok().body(this.taskService.getPendingTask(email));
+  }
 
-    @PostMapping
-    public ResponseEntity<Task> create(@RequestBody TaskRequestDTO taskDto) {
-        Task taskCreated = taskService.create(taskDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
-    }
+  @PostMapping
+  public ResponseEntity<Task> create(@RequestBody TaskRequestDTO taskDto) {
+    Task taskCreated = taskService.create(taskDto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
+  }
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<TaskUploadResponseDTO> upload(@RequestParam("arquivo") MultipartFile uploadFile,
-                                                        @RequestParam("nome") String filename) {
-        System.out.printf("Processo: %s", filename);
-        return ResponseEntity.ok().body(taskService.uploadData(uploadFile));
-    }
+  @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<TaskUploadResponseDTO> upload(
+      @RequestParam("arquivo") MultipartFile uploadFile, @RequestParam("nome") String filename) {
+    System.out.printf("Processo: %s", filename);
+    return ResponseEntity.ok().body(taskService.uploadData(uploadFile));
+  }
 
-    @PutMapping("/{taskId}")
-    public ResponseEntity<Task> update(@PathVariable("taskId") Long taskId, @RequestBody TaskRequestDTO taskDto) {
-        taskService.update(taskId, taskDto);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+  @PutMapping("/{taskId}")
+  public ResponseEntity<Task> update(
+      @PathVariable("taskId") Long taskId, @RequestBody TaskRequestDTO taskDto) {
+    taskService.update(taskId, taskDto);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
 
-    @DeleteMapping("/{taskId}")
-    public ResponseEntity<Task> delete(@PathVariable("taskId") Long taskId) {
-        taskService.delete(taskId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
+  @DeleteMapping("/{taskId}")
+  public ResponseEntity<Task> delete(@PathVariable("taskId") Long taskId) {
+    taskService.delete(taskId);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
 }
