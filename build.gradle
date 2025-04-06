@@ -1,45 +1,47 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.2'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-  implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.flywaydb:flyway-core'
-  implementation 'org.flywaydb:flyway-database-postgresql'
-  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
-  implementation 'org.ff4j:ff4j-spring-boot-starter:1.9'
-  implementation 'org.ff4j:ff4j-web:2.1'
-  compileOnly 'org.jboss.logging:jboss-logging'
-  compileOnly 'org.projectlombok:lombok'
-  developmentOnly 'org.springframework.boot:spring-boot-devtools'
-  runtimeOnly 'org.postgresql:postgresql'
-  annotationProcessor 'org.projectlombok:lombok'
-  testImplementation 'org.springframework.boot:spring-boot-starter-test'
-  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    implementation 'org.ff4j:ff4j-spring-boot-starter:1.9'
+    implementation 'org.ff4j:ff4j-web:2.1'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    compileOnly 'org.jboss.logging:jboss-logging'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

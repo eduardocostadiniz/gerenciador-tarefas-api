@@ -4,6 +4,7 @@ import com.eduardo.gerenciador_tarefas_api.models.Task;
 import com.eduardo.gerenciador_tarefas_api.models.TaskRequestDTO;
 import com.eduardo.gerenciador_tarefas_api.models.TaskUploadResponseDTO;
 import com.eduardo.gerenciador_tarefas_api.services.TaskService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -21,8 +20,15 @@ public class TaskController {
   @Autowired private TaskService taskService;
 
   @GetMapping
+  public ResponseEntity<List<Task>> getAllWithPage(Pageable page) {
+    final List<Task> tasks = taskService.getAllWithPagination(page).getContent();
+    return ResponseEntity.status(HttpStatus.OK).body(tasks);
+  }
+
+  @GetMapping("/all")
   public ResponseEntity<List<Task>> getAll(Pageable page) {
-    List<Task> tasks = taskService.getAllWithPagination(page).getContent();
+    final List<Task> tasks = taskService.getAll();
+
     return ResponseEntity.status(HttpStatus.OK).body(tasks);
   }
 
@@ -33,7 +39,7 @@ public class TaskController {
 
   @PostMapping
   public ResponseEntity<Task> create(@RequestBody TaskRequestDTO taskDto) {
-    Task taskCreated = taskService.create(taskDto);
+    final Task taskCreated = taskService.create(taskDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
   }
 
